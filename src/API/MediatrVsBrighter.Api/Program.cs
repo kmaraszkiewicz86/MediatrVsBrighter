@@ -1,29 +1,18 @@
 using Carter;
 using FluentValidation;
 using MediatrVsBrighter.Api.Database;
+using MediatrVsBrighter.Api.Extensions;
 using Microsoft.EntityFrameworkCore;
 using Paramore.Brighter.Extensions.DependencyInjection;
 using CreateProductCommandBrighter = MediatrVsBrighter.Api.Features.Brighter.CreateProduct.CreateProductCommand;
-using CreateProductRepositoryBrighter = MediatrVsBrighter.Api.Features.Brighter.CreateProduct.CreateProductRepository;
-using CreateProductRepositoryMediatr = MediatrVsBrighter.Api.Features.Mediatr.CreateProduct.CreateProductRepository;
-using ICreateProductRepositoryBrighter = MediatrVsBrighter.Api.Features.Brighter.CreateProduct.ICreateProductRepository;
-using ICreateProductRepositoryMediatr = MediatrVsBrighter.Api.Features.Mediatr.CreateProduct.ICreateProductRepository;
-using GetAllDatabaseQueryMediatr = MediatrVsBrighter.Api.Features.Mediatr.GetAll.GetAllDatabaseQuery;
-using IGetAllDatabaseQueryMediatr = MediatrVsBrighter.Api.Features.Mediatr.GetAll.IGetAllDatabaseQuery;
-using IGetAllDatabaseQueryBrighter = MediatrVsBrighter.Api.Features.Brighter.GetAll.IGetAllDatabaseQuery;
-using GetAllDatabaseQueryBrighter = MediatrVsBrighter.Api.Features.Brighter.GetAll.GetAllDatabaseQuery;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure In-Memory Database
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("Test")); 
+    options.UseInMemoryDatabase("Test"));
 
-builder.Services.AddScoped<ICreateProductRepositoryMediatr, CreateProductRepositoryMediatr>();
-builder.Services.AddScoped<ICreateProductRepositoryBrighter, CreateProductRepositoryBrighter>();
-builder.Services.AddScoped<IGetAllDatabaseQueryMediatr, GetAllDatabaseQueryMediatr>();
-builder.Services.AddScoped<IGetAllDatabaseQueryBrighter, GetAllDatabaseQueryBrighter>();
-builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddDatabaseClasses();
 
 // Configure MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
