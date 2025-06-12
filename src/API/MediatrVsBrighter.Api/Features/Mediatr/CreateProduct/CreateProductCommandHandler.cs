@@ -1,4 +1,5 @@
-﻿using MediatR;
+﻿
+using MediatR;
 using MediatrVsBrighter.Api.Database.Entities;
 
 namespace MediatrVsBrighter.Api.Features.Mediatr.CreateProduct

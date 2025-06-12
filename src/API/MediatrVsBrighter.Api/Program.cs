@@ -1,34 +1,40 @@
 using Carter;
 using FluentValidation;
 using MediatrVsBrighter.Api.Database;
-using MediatrVsBrighter.Api.Features.Mediatr.CreateProduct;
 using Microsoft.EntityFrameworkCore;
+using Paramore.Brighter.Extensions.DependencyInjection;
+using CreateProductCommandBrighter = MediatrVsBrighter.Api.Features.Brighter.CreateProduct.CreateProductCommand;
+using CreateProductRepositoryBrighter = MediatrVsBrighter.Api.Features.Brighter.CreateProduct.CreateProductRepository;
+using CreateProductRepositoryMediatr = MediatrVsBrighter.Api.Features.Mediatr.CreateProduct.CreateProductRepository;
+using ICreateProductRepositoryBrighter = MediatrVsBrighter.Api.Features.Brighter.CreateProduct.ICreateProductRepository;
+using ICreateProductRepositoryMediatr = MediatrVsBrighter.Api.Features.Mediatr.CreateProduct.ICreateProductRepository;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Configure In-Memory Database
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseInMemoryDatabase("YourProjectDb")); 
+    options.UseInMemoryDatabase("Test")); 
 
-builder.Services.AddScoped<ICreateProductRepository, CreateProductRepository>();
+builder.Services.AddScoped<ICreateProductRepositoryMediatr, CreateProductRepositoryMediatr>();
+builder.Services.AddScoped<ICreateProductRepositoryBrighter, CreateProductRepositoryBrighter>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Configure MediatR
 builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(Program).Assembly));
 
 // Configure FluentValidation
-// Automatycznie rejestruje wszystkie walidatory, które dziedzicz¹ po AbstractValidator
 builder.Services.AddValidatorsFromAssembly(typeof(Program).Assembly);
 
-// Dodaj Carter do us³ug
-builder.Services.AddCarter(); // Rejestruje wszystkie CarterModules w assembly
+// Configure Brighter
+builder.Services.AddBrighter()
+    .AutoFromAssemblies(typeof(CreateProductCommandBrighter).Assembly);
 
+// Add Carter
+builder.Services.AddCarter();
 
-// Add services to the container.
 var app = builder.Build();
 
 app.UseHttpsRedirection();
-
-// U¿yj Cartera do mapowania endpointów
-app.MapCarter(); // Mapuje endpointy z zarejestrowanych CarterModules
+app.MapCarter();
 
 app.Run();
