@@ -10,6 +10,8 @@ using ICreateProductRepositoryBrighter = MediatrVsBrighter.Api.Features.Brighter
 using ICreateProductRepositoryMediatr = MediatrVsBrighter.Api.Features.Mediatr.CreateProduct.ICreateProductRepository;
 using GetAllDatabaseQueryMediatr = MediatrVsBrighter.Api.Features.Mediatr.GetAll.GetAllDatabaseQuery;
 using IGetAllDatabaseQueryMediatr = MediatrVsBrighter.Api.Features.Mediatr.GetAll.IGetAllDatabaseQuery;
+using IGetAllDatabaseQueryBrighter = MediatrVsBrighter.Api.Features.Brighter.GetAll.IGetAllDatabaseQuery;
+using GetAllDatabaseQueryBrighter = MediatrVsBrighter.Api.Features.Brighter.GetAll.GetAllDatabaseQuery;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -20,6 +22,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<ICreateProductRepositoryMediatr, CreateProductRepositoryMediatr>();
 builder.Services.AddScoped<ICreateProductRepositoryBrighter, CreateProductRepositoryBrighter>();
 builder.Services.AddScoped<IGetAllDatabaseQueryMediatr, GetAllDatabaseQueryMediatr>();
+builder.Services.AddScoped<IGetAllDatabaseQueryBrighter, GetAllDatabaseQueryBrighter>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 // Configure MediatR
