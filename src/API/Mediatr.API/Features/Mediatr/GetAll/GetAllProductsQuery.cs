@@ -1,5 +1,5 @@
+using Mediatr.Features.Mediatr.GetAll;
 using MediatR;
-using MediatrVsBrighter.Api.Features.Mediatr.GetAll;
 
 namespace MediatrVsBrighter.Api.Features.Mediatr.GetAll
 {

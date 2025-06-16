@@ -1,0 +1,20 @@
+@MediatrVsBrighter.Api_HostAddress = http://localhost:5296
+
+# Get all products
+GET {{MediatrVsBrighter.Api_HostAddress}}/mediatr/products
+Accept: application/json
+
+###
+
+# Create a new product
+POST {{MediatrVsBrighter.Api_HostAddress}}/mediatr/products
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Sample Product",
+  "description": "A sample product description",
+  "price": 9.99
+}
+
+###

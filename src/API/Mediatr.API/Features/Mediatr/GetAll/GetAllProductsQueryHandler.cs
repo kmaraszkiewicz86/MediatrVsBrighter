@@ -1,3 +1,4 @@
+using Mediatr.Features.Mediatr.GetAll;
 using MediatR;
 
 namespace MediatrVsBrighter.Api.Features.Mediatr.GetAll

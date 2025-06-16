@@ -1,4 +1,4 @@
-namespace MediatrVsBrighter.Api.Features.Mediatr.GetAll
+namespace Mediatr.Features.Mediatr.GetAll
 {
     public record ProductDto
     {

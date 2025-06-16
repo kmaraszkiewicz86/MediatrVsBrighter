@@ -1,7 +1,5 @@
 ﻿using Carter;
 using MediatR;
-using System.ComponentModel.DataAnnotations;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory.Model;
 
 namespace MediatrVsBrighter.Api.Features.Mediatr.CreateProduct
 {
