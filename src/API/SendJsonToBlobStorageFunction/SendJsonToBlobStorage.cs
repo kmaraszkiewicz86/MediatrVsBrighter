@@ -28,7 +28,6 @@ namespace SendJsonToBlobStorageFunction
 
             logger.LogInformation("C# HTTP trigger function processed a request.");
             
-            // Odczytanie body requesta jako string
             var requestBody = await req.ReadAsStringAsync();
 
             if (string.IsNullOrWhiteSpace(requestBody))
@@ -38,18 +37,14 @@ namespace SendJsonToBlobStorageFunction
 
             var data = JsonSerializer.Deserialize<DemoPayload>(requestBody);
 
-            // Pobierz referencjê do kontenera
             var containerClient = blobServiceClient.GetBlobContainerClient(ContainerName);
 
-            // Upewnij siê, ¿e kontener istnieje (utwórz jeœli nie ma)
             await containerClient.CreateIfNotExistsAsync();
 
-            // Nazwa pliku z GUID
             var blobName = $"{Guid.NewGuid()}.json";
 
             var blobClient = containerClient.GetBlobClient(blobName);
 
-            // Zapisz JSON jako strumieñ do Blob Storage
             using (var stream = new MemoryStream(System.Text.Encoding.UTF8.GetBytes(requestBody)))
             {
                 await blobClient.UploadAsync(stream, overwrite: true);
@@ -57,7 +52,6 @@ namespace SendJsonToBlobStorageFunction
 
             var name = data?.Name ?? "unknown";
 
-            // Przygotowanie odpowiedzi
             return new OkObjectResult($"Received JSON for {name}. Everything is OK.!");
         }
     }
